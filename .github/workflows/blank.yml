@@ -1,0 +1,42 @@
+# .github/workflows/cpp-build.yml
+
+name: CI
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Sets up the C++ environment with g++
+      - name: Set up C++ environment
+        uses: actions/setup-cpp@v2
+        with:
+          compiler: g++
+
+      # Builds the C++ program
+      - name: Build the program
+        run: g++ -o prime_numbers prime_numbers.cpp
+
+      # Runs the compiled program
+      - name: Run the program
+        run: ./prime_numbers
+
+      # Optionally, you can add tests here or check the output
+      # For demonstration, we assume the program runs correctly and doesn't require specific test commands
+
